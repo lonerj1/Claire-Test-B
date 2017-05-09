@@ -1,23 +1,23 @@
-System Architecture
+System architecture
 ===================
 
-The architecture above consists of 5 key sections:
+The architecture consists of five key sections:
 
 AMQP Service Bus
 ----------------
 
-This is the mechanism through which all the individual components in project Symphony communicate. It is an instance of RabbitMQ, an open source implementation of an AMQP bus, and is distributed by Pivotal under the Mozilla Public License.
+This is the mechanism through which all the individual components in Symphony communicate. It is an instance of RabbitMQ, an open source implementation of an AMQP bus, and is distributed by Pivotal under the Mozilla Public License.
 
-Symphony Hal Layer & Hal Integration
-------------------------------------
-Project Symphony is using those two projects to provide a hardware abstraction layer between Project Symphony and the element managers for the components inside a VxRack System
+Symphony HAL and HAL Integration
+-------------------------------------------------------------------
+Symphony is using those two projects to provide a hardware abstraction layer (HAL) between Symphony and the element managers for the components inside a VxRack System.
 
-Portable, Autonomous Query Execution (PAQX) Connectors
+PAQX connectors
 ------------------------------------------------------
 
-Defines a business capability that is available through QEXE, an example of which is Inventory Management allowing queries such as "find storage arrays" or "find disks contained by storage array 'X123456'".  PAQX contracts are defined in a language-agnostic manner and should be implementable by 3rd Party companies without dependency on the VCE Software Engineering teams.   A PAQX can subscribe to events from other PAQX or from the VCE Infrastructure.
+Portable Autonomous Query Execution (PAQX) connectors define a business capability available through QEXE, an example of which is Inventory Management allowing queries such as "find storage arrays" or "find disks contained by storage array 'X123456'".  PAQX contracts are defined in a language-agnostic manner and should be implementable by third party companies without dependency on the Dell EMC software engineering teams. A PAQX can subscribe to events from other PAQX or from the VCE Infrastructure.
 
-Core Services
+Core services
 --------------
 Such as credentials for the element managers and operators, the definition files that are used to describe the components in a VxRack System, a registry, so that additional PAQX can be deployed and consumed without restarting a running Symphony instance, and a persistence layer.
 
@@ -26,7 +26,7 @@ Core Services API Gateway
 API gateway is an implementation of a framework (Zuul + Consul.io) that acts as a single entry point for all clients. The API gateway handles requests in one of two ways. Some requests are simply proxied/routed to the appropriate service. It handles other requests by fanning out to multiple services.
 
 
-Core Services Breakdown
+Core Services breakdown
 -----------------------
 
 Endpoint Registry
@@ -34,9 +34,6 @@ Endpoint Registry
 
 Capability Registry
  Provides the ability to register and lookup new business capabilities dynamically. The Capability Registry becomes the repository of functionality that the system can provide e.g. Install ESXi etc..
-
-Application Config
- This is a project to store application configuration centrally so when we move to a clustered environment for example, there is no requirement on the user to change configuration data in multiple places.
 
 System Definition
  System Definition Service allows the platform to store, retrieve and query systems (blocks) and components contained in systems.
@@ -55,5 +52,3 @@ Field Replacement Unit (FRU) PAQX
 
 Dell Node Expansion PAQX
  This PAQX will automate the process of deploying a new node that has been bolted into the cabinet of an already operating VxRack system. In some respects, it is the 2nd half of the field replacement PAQX but it uses new identifiers and adds resources to the system, rather than simply replacing existing resources
-
-
